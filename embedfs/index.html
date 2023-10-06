@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>snaffler-ui</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>Host</th>
+        <th>Type</th>
+        <th>Color</th>
+        <th>R/RW</th>
+        <th>File</th>
+      </tr>
+      {{ range . }}
+      <tr>
+        <td>{{ .UserHost }}</td>
+        <td>{{ .Type }}</td>
+        <td>{{ .Triage }}</td>
+        <td>{{ .Permission }}</td>
+        <td>{{ .FilePath }}</td>
+      </tr>
+      {{ end }}
+    </table>
+  </body>
+</html>
+
