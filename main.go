@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"sort"
 	"strings"
 )
 
@@ -90,8 +91,60 @@ func main() {
 	tmpl := must2(template.ParseFS(embedfs, "html/*.html"))
 
 	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
+		sorted := req.URL.Query().Get("sort") != ""
+		showBlacks := req.URL.Query().Get("black") != ""
+		showReds := req.URL.Query().Get("red") != ""
+		showYellows := req.URL.Query().Get("yellow") != ""
+		showGreens := req.URL.Query().Get("green") != ""
+
+		if !showBlacks && !showReds && !showYellows && !showGreens {
+			showBlacks = true
+			showReds = true
+			showYellows = true
+			showGreens = true
+		}
+
+    logEntriesCopy := make([]LogEntry, len(logEntries))
+    copy(logEntriesCopy, logEntries)
+
+		if sorted {
+			sort.SliceStable(logEntriesCopy, func(a, b int) bool {
+				sortIndex := func(l LogEntry) int {
+					switch l.Triage {
+					case "Black":
+						return 1
+					case "Red":
+						return 2
+					case "Yellow":
+						return 3
+					case "Green":
+						return 4
+					default:
+						return 0
+					}
+				}
+				return sortIndex(logEntriesCopy[a]) < sortIndex(logEntriesCopy[b])
+			})
+		}
+
+		indexData := struct {
+			LogEntries  []LogEntry
+			Sorted      bool
+			ShowBlacks  bool
+			ShowReds    bool
+			ShowYellows bool
+			ShowGreens  bool
+		}{
+			LogEntries:  logEntriesCopy,
+			Sorted:      sorted,
+			ShowBlacks:  showBlacks,
+			ShowReds:    showReds,
+			ShowYellows: showYellows,
+			ShowGreens:  showGreens,
+		}
+
 		res.Header().Add("Content-Type", "text/html")
-		tmpl.ExecuteTemplate(res, "index.html", logEntries)
+		tmpl.ExecuteTemplate(res, "index.html", indexData)
 	})
 
 	http.HandleFunc("/style.css", func(res http.ResponseWriter, req *http.Request) {

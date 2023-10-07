@@ -5,6 +5,18 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
+    <form method="GET" action="/">
+      <input type="checkbox" id="checkbox-sort" name="sort" {{ if .Sorted }}checked{{ end }} onchange="this.form.submit()">
+      <label for="checkbox-sort">sort</label>
+      <input type="checkbox" id="checkbox-black" name="black" {{ if .ShowBlacks }}checked{{ end }} onchange="this.form.submit()">
+      <label for="checkbox-black">black</label>
+      <input type="checkbox" id="checkbox-red" name="red" {{ if .ShowReds }}checked{{ end }} onchange="this.form.submit()">
+      <label for="checkbox-red">red</label>
+      <input type="checkbox" id="checkbox-yellow" name="yellow" {{ if .ShowYellows }}checked{{ end }} onchange="this.form.submit()">
+      <label for="checkbox-yellow">yellow</label>
+      <input type="checkbox" id="checkbox-green" name="green" {{ if .ShowGreens }}checked{{end}} onchange="this.form.submit()">
+      <label for="checkbox-green">green</label>
+    </form>
     <table>
       <tr>
         <th>Host</th>
@@ -13,7 +25,7 @@
         <th>R/RW</th>
         <th>Path</th>
       </tr>
-      {{ range . }}
+      {{ range .LogEntries }}
       <tr class="{{ .Triage }}">
         <td>{{ .UserHost }}</td>
         <td>{{ .Type }}</td>
