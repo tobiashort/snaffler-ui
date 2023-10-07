@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+}
+
+th {
+  text-align: left;
+}
+
+tr.Black {
+  color: white;
+  background-color: black;
+}
+
+tr.Red {
+  color: white;
+  background-color: red;
+}
+
+tr.Yellow {
+  color: black;
+  background-color: yellow;
+}
+
+tr.Green {
+  color: black;
+  background-color: lightgreen;
+}

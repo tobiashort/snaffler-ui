@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"html/template"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -34,7 +35,7 @@ type LogEntry struct {
 	Context          string
 }
 
-//go:embed embedfs
+//go:embed html css
 var embedfs embed.FS
 
 func main() {
@@ -80,10 +81,17 @@ func main() {
 		logEntries = append(logEntries, logEntry)
 	}
 
-  tmpl := must2(template.ParseFS(embedfs, "embedfs/*.html"))
+  tmpl := must2(template.ParseFS(embedfs, "html/*.html"))
 
   http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
+    res.Header().Add("Content-Type", "text/html")
     tmpl.ExecuteTemplate(res, "index.html", logEntries)
+  })
+
+  http.HandleFunc("/style.css", func(res http.ResponseWriter, req *http.Request) {
+    res.Header().Add("Content-Type", "text/css")
+    file := must2(embedfs.Open("css/style.css"))
+    io.Copy(res, file)
   })
 
   addr := ":8111"

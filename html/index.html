@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>snaffler-ui</title>
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
     <table>
@@ -13,7 +14,7 @@
         <th>File</th>
       </tr>
       {{ range . }}
-      <tr>
+      <tr class="{{ .Triage }}">
         <td>{{ .UserHost }}</td>
         <td>{{ .Type }}</td>
         <td>{{ .Triage }}</td>
