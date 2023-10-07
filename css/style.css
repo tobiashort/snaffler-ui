@@ -4,6 +4,7 @@ body {
 
 th {
   text-align: left;
+  background-color: lightgray;
 }
 
 tr.Black {

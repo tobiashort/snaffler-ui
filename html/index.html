@@ -11,7 +11,7 @@
         <th>Type</th>
         <th>Color</th>
         <th>R/RW</th>
-        <th>File</th>
+        <th>Path</th>
       </tr>
       {{ range . }}
       <tr class="{{ .Triage }}">
@@ -19,7 +19,7 @@
         <td>{{ .Type }}</td>
         <td>{{ .Triage }}</td>
         <td>{{ .Permission }}</td>
-        <td>{{ .FilePath }}</td>
+        <td>{{ .Path }}</td>
       </tr>
       {{ end }}
     </table>
