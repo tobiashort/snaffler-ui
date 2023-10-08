@@ -97,15 +97,37 @@ func main() {
 		showYellows := req.URL.Query().Get("yellow") != ""
 		showGreens := req.URL.Query().Get("green") != ""
 
-		if !showBlacks && !showReds && !showYellows && !showGreens {
-			showBlacks = true
-			showReds = true
-			showYellows = true
-			showGreens = true
-		}
+    allTrue := func() bool {
+      return showBlacks && showReds && showYellows && showGreens
+    }
+    
+    allFalse := func() bool {
+      return !showBlacks && !showReds && !showYellows && !showGreens
+    }
 
-    logEntriesCopy := make([]LogEntry, len(logEntries))
-    copy(logEntriesCopy, logEntries)
+    var logEntriesCopy []LogEntry
+
+    if allTrue() || allFalse() {
+      logEntriesCopy = make([]LogEntry, len(logEntries))
+      copy(logEntriesCopy, logEntries)
+    } else {
+      logEntriesCopy = make([]LogEntry, 0)
+      for _, logEntry := range logEntries {
+        if logEntry.Triage == "Black" && showBlacks {
+          goto addLogEntry
+        } else if logEntry.Triage == "Red" && showReds {
+          goto addLogEntry
+        } else if logEntry.Triage == "Yellow" && showYellows {
+          goto addLogEntry
+        } else if logEntry.Triage == "Green" && showGreens {
+          goto addLogEntry
+        } else {
+          continue
+        }
+        addLogEntry:
+          logEntriesCopy = append(logEntriesCopy, logEntry)
+      }
+    }
 
 		if sorted {
 			sort.SliceStable(logEntriesCopy, func(a, b int) bool {
