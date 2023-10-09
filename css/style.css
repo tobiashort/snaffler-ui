@@ -26,3 +26,7 @@ tr.Green {
   color: black;
   background-color: lightgreen;
 }
+
+td {
+  vertical-align: top;
+}

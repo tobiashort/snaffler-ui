@@ -85,6 +85,9 @@ func main() {
 			logEntry.Path = atIndex(values, 4)
 		}
 
+    logEntry.Context = strings.ReplaceAll(logEntry.Context, "\\r", "")
+    logEntry.Context = strings.ReplaceAll(logEntry.Context, "\\n", "\n")
+
 		logEntries = append(logEntries, logEntry)
 	}
 

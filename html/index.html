@@ -24,6 +24,7 @@
         <th>Color</th>
         <th>R/RW</th>
         <th>Path</th>
+        <th>Context</th>
       </tr>
       {{ range .LogEntries }}
       <tr class="{{ .Triage }}">
@@ -32,6 +33,7 @@
         <td>{{ .Triage }}</td>
         <td>{{ .Permission }}</td>
         <td>{{ .Path }}</td>
+        <td>{{ .Context }}</td>
       </tr>
       {{ end }}
     </table>
