@@ -39,5 +39,11 @@ tr.Green {
 }
 
 td {
-  vertical-align: top;
+  padding: 2px 6px;
+  vertical-align: middle;
+}
+
+td.action {
+  text-align: center;
+  vertical-align: middle;
 }

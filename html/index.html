@@ -25,6 +25,7 @@
         <th>R/RW</th>
         <th>Path</th>
         <th>Context</th>
+        <th>Action</th>
       </tr>
       {{ range .LogEntries }}
       <tr class="{{ .Triage }}">
@@ -34,6 +35,13 @@
         <td>{{ .Permission }}</td>
         <td>{{ .Path }}</td>
         <td>{{ .Context }}</td>
+        <td class="action">
+        {{ if eq .Type "[Share]" }}
+          <button>Open</button>
+        {{ else if eq .Type "[File]" }}
+          <button>Download</button>
+        {{ end }}
+        </td>
       </tr>
       {{ end }}
     </table>
