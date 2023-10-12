@@ -3,20 +3,19 @@
   <head>
     <title>snaffler-ui</title>
     <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
   </head>
   <body>
-    <form method="GET" action="/">
-      <input type="checkbox" id="checkbox-sort" name="sort" {{ if .Sorted }}checked{{ end }} onchange="this.form.submit()">
-      <label for="checkbox-sort">sort</label>
-      <input type="checkbox" id="checkbox-black" name="black" {{ if .ShowBlacks }}checked{{ end }} onchange="this.form.submit()">
-      <label for="checkbox-black">black</label>
-      <input type="checkbox" id="checkbox-red" name="red" {{ if .ShowReds }}checked{{ end }} onchange="this.form.submit()">
-      <label for="checkbox-red">red</label>
-      <input type="checkbox" id="checkbox-yellow" name="yellow" {{ if .ShowYellows }}checked{{ end }} onchange="this.form.submit()">
-      <label for="checkbox-yellow">yellow</label>
-      <input type="checkbox" id="checkbox-green" name="green" {{ if .ShowGreens }}checked{{end}} onchange="this.form.submit()">
-      <label for="checkbox-green">green</label>
-    </form>
+    <input type="checkbox" id="checkbox-sort" name="sort" {{ if .Sorted }}checked{{ end }}>
+    <label for="checkbox-sort">sort</label>
+    <input type="checkbox" id="checkbox-black" name="black" {{ if .ShowBlacks }}checked{{ end }}>
+    <label for="checkbox-black">black</label>
+    <input type="checkbox" id="checkbox-red" name="red" {{ if .ShowReds }}checked{{ end }}>
+    <label for="checkbox-red">red</label>
+    <input type="checkbox" id="checkbox-yellow" name="yellow" {{ if .ShowYellows }}checked{{ end }}>
+    <label for="checkbox-yellow">yellow</label>
+    <input type="checkbox" id="checkbox-green" name="green" {{ if .ShowGreens }}checked{{ end }}>
+    <label for="checkbox-green">green</label>
     <table>
       <tr>
         <th>Host</th>
@@ -36,14 +35,11 @@
         <td>{{ .Path }}</td>
         <td>{{ .Context }}</td>
         <td class="action">
-          <form method="GET" action="/">
-            <input type="hidden" name="path" value="{{ .Path }}">
-            {{ if eq .Type "[Share]" }}
-            <input type="submit" name="action" value="open">
-            {{ else if eq .Type "[File]" }}
-            <input type="submit" name="action" value="download">
-            {{ end }}
-          </form>
+          {{ if eq .Type "[Share]" }}
+          <button class="button-open">Open</button>
+          {{ else if eq .Type "[File]" }}
+          <button class="button-download">Download</button>
+          {{ end }}
         </td>
       </tr>
       {{ end }}

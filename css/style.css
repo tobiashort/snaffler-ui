@@ -45,5 +45,8 @@ td {
 
 td.action {
   text-align: center;
-  vertical-align: middle;
+}
+
+td.action > button {
+  width: 100%;
 }

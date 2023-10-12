@@ -39,7 +39,7 @@ type LogEntry struct {
 	Context          string
 }
 
-//go:embed html css
+//go:embed html css js
 var embedfs embed.FS
 
 func main() {
@@ -189,6 +189,12 @@ func main() {
 	http.HandleFunc("/style.css", func(res http.ResponseWriter, req *http.Request) {
 		res.Header().Add("Content-Type", "text/css")
 		file := must2(embedfs.Open("css/style.css"))
+		io.Copy(res, file)
+	})
+	
+  http.HandleFunc("/script.js", func(res http.ResponseWriter, req *http.Request) {
+		res.Header().Add("Content-Type", "text/javascript")
+		file := must2(embedfs.Open("js/script.js"))
 		io.Copy(res, file)
 	})
 
