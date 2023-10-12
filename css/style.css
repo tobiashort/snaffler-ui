@@ -1,30 +1,41 @@
+:root {
+  --bg-black: #373b41;
+  --bg-red: #cc6a6a;
+  --bg-yellow: #f0c674;
+  --bg-green: #b5bd68;
+  --bg-gray: #c5c8c6;
+
+  --fg-black: #000000;
+  --fg-white: #ffffff;
+}
+
 body {
   margin: 0;
 }
 
 th {
   text-align: left;
-  background-color: lightgray;
+  background-color: var(--bg-gray);
 }
 
 tr.Black {
-  color: white;
-  background-color: black;
+  color: var(--fg-white);
+  background-color: var(--bg-black);
 }
 
 tr.Red {
-  color: white;
-  background-color: red;
+  color: var(--fg-black);
+  background-color: var(--bg-red);
 }
 
 tr.Yellow {
-  color: black;
-  background-color: yellow;
+  color: var(--fg-black);
+  background-color: var(--bg-yellow);
 }
 
 tr.Green {
-  color: black;
-  background-color: lightgreen;
+  color: var(--fg-black);
+  background-color: var(--bg-green);
 }
 
 td {
