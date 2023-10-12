@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"sort"
 	"strings"
 )
@@ -94,6 +95,16 @@ func main() {
 	tmpl := must2(template.ParseFS(embedfs, "html/*.html"))
 
 	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
+		action := req.URL.Query().Get("action")
+		path := req.URL.Query().Get("path")
+
+    switch action {
+    case "open":
+      powershell(fmt.Sprintf("Invoke-Item '%s'", path))
+    case "download":
+      powershell(fmt.Sprintf("Copy-Item -Path '%s' -Destination '$HOME\\Downloads'", path))
+    }
+
 		sorted := req.URL.Query().Get("sort") != ""
 		showBlacks := req.URL.Query().Get("black") != ""
 		showReds := req.URL.Query().Get("red") != ""
@@ -181,4 +192,13 @@ func main() {
 	addr := ":8111"
 	fmt.Printf("[*] listen on %s\n", addr)
 	http.ListenAndServe(addr, nil)
+}
+
+
+func powershell(cmd string) {
+  command := exec.Command("powershell.exe", "-c", cmd)
+  _, err := command.CombinedOutput()
+  if err != nil {
+    fmt.Fprintln(os.Stderr, "[!]", err)
+  }
 }
