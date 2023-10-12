@@ -36,11 +36,14 @@
         <td>{{ .Path }}</td>
         <td>{{ .Context }}</td>
         <td class="action">
-        {{ if eq .Type "[Share]" }}
-          <button>Open</button>
-        {{ else if eq .Type "[File]" }}
-          <button>Download</button>
-        {{ end }}
+          <form method="GET" action="/">
+            <input type="hidden" name="path" value="{{ .Path }}">
+            {{ if eq .Type "[Share]" }}
+            <input type="submit" name="action" value="open">
+            {{ else if eq .Type "[File]" }}
+            <input type="submit" name="action" value="download">
+            {{ end }}
+          </form>
         </td>
       </tr>
       {{ end }}
