@@ -39,3 +39,10 @@ for (const checkbox of [checkboxSort, checkboxBlack, checkboxRed, checkboxYellow
   checkbox.addEventListener("change", () => call_backend());
 }
 
+for (const button of buttonsOpen) {
+  button.addEventListener("click", () => call_backend("open", button.getAttribute("data-path")));
+}
+
+for (const button of buttonsDownload) {
+  button.addEventListener("click", () => call_backend("download", button.getAttribute("data-path")));
+}

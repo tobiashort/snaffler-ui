@@ -36,9 +36,9 @@
         <td>{{ .Context }}</td>
         <td class="action">
           {{ if eq .Type "[Share]" }}
-          <button class="button-open">Open</button>
+          <button class="button-open" data-path="{{ .Path }}">Open</button>
           {{ else if eq .Type "[File]" }}
-          <button class="button-download">Download</button>
+          <button class="button-download" data-path="{{ .Path }}">Download</button>
           {{ end }}
         </td>
       </tr>
