@@ -9,8 +9,10 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"sort"
 	"strings"
+	"time"
 )
 
 func must(err error) {
@@ -102,7 +104,8 @@ func main() {
     case "open":
       powershell(fmt.Sprintf("Invoke-Item '%s'", path))
     case "download":
-      powershell(fmt.Sprintf("Copy-Item -Path '%s' -Destination '$HOME\\Downloads'", path))
+      dest := fmt.Sprintf("%d_%s", time.Now().UnixNano(), filepath.Base(path))
+      powershell(fmt.Sprintf("Copy-Item -Path '%s' -Destination '%s'", path, dest))
     }
 
 		sorted := req.URL.Query().Get("sort") != ""
@@ -197,8 +200,8 @@ func main() {
 
 func powershell(cmd string) {
   command := exec.Command("powershell.exe", "-c", cmd)
-  _, err := command.CombinedOutput()
+  out, err := command.CombinedOutput()
   if err != nil {
-    fmt.Fprintln(os.Stderr, "[!]", err)
+    fmt.Fprintln(os.Stderr, "[!]", err, string(out))
   }
 }
